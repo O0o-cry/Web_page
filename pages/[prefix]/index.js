@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import TechGrow from '@/components/TechGrow'
 import { siteConfig } from '@/lib/config'
+//import { siteConfig , isExport} from '@/lib/config'
 import { resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/db/notion/getPageTableOfContents'
@@ -132,15 +133,24 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     locale,
   })
 
+  // return {
+  //   props,
+  //   revalidate: isExport()
+  //     ? undefined
+  //     : siteConfig(
+  //       'NEXT_REVALIDATE_SECOND',
+  //       BLOG.NEXT_REVALIDATE_SECOND,
+  //       props.NOTION_CONFIG
+  //     ),
+  //   notFound: !props.post
+  // }
   return {
     props,
-    revalidate: isExport()
-      ? undefined
-      : siteConfig(
-        'NEXT_REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      ),
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    ),
     notFound: !props.post
   }
 }

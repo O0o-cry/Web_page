@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
+//import { siteConfig, isExport } from '@/lib/config'
 import { resolvePostProps } from '@/lib/db/SiteDataApi'
 import Slug from '..'
 import { checkSlugHasOneSlash } from '@/lib/utils/post'
@@ -35,15 +36,24 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
     locale,
   })
 
+  // return {
+  //   props,
+  //   revalidate: isExport()
+  //     ? undefined
+  //     : siteConfig(
+  //       'NEXT_REVALIDATE_SECOND',
+  //       BLOG.NEXT_REVALIDATE_SECOND,
+  //       props.NOTION_CONFIG
+  //     ),
+  //   notFound: !props.post
+  // }
   return {
     props,
-    revalidate: isExport()
-      ? undefined
-      : siteConfig(
-        'NEXT_REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      ),
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    ),
     notFound: !props.post
   }
 }

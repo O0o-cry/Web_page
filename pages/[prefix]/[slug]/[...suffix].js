@@ -47,15 +47,24 @@ export async function getStaticProps({
     locale,
   })
 
+  // return {
+  //   props,
+  //   revalidate: isExport()
+  //     ? undefined
+  //     : siteConfig(
+  //       'NEXT_REVALIDATE_SECOND',
+  //       BLOG.NEXT_REVALIDATE_SECOND,
+  //       props.NOTION_CONFIG
+  //     ),
+  //   notFound: !props.post
+  // }
   return {
     props,
-    revalidate: isExport()
-      ? undefined
-      : siteConfig(
-        'NEXT_REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      ),
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    ),
     notFound: !props.post
   }
 }
